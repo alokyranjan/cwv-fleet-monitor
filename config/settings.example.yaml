@@ -1,0 +1,13 @@
+gcp:
+  project_id: "your-gcp-project-id"
+  service_account_key: "secrets/sa-key.json"
+  location: "US"
+bigquery:
+  dataset_name: "dealeron_crux"
+  origins_table: "origins"
+  cwv_monthly_table: "cwv_monthly"
+crux:
+  source_table: "chrome-ux-report.materialized.device_summary"
+  backfill_start: 202301
+origins:
+  csv_path: "data/dealeron_origins.csv"

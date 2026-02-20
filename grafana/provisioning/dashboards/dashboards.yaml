@@ -1,0 +1,12 @@
+apiVersion: 1
+
+providers:
+  - name: CrUX Web Vitals
+    orgId: 1
+    folder: CrUX Web Vitals
+    type: file
+    disableDeletion: false
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards
+      foldersFromFilesStructure: false

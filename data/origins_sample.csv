@@ -1,0 +1,9 @@
+origin,dealer_name,dealer_group,oem_brand,region,state,platform_version,is_active,tags
+https://www.smithchevrolet.com,Smith Chevrolet,Smith Auto Group,Chevrolet,Southeast,GA,3.2,true,flagship
+https://www.jonesford.com,Jones Ford,Jones Automotive,Ford,Northeast,NY,3.1,true,
+https://www.hendricktoyota.com,Hendrick Toyota,Hendrick Automotive,Toyota,Southeast,NC,3.2,true,tier1
+https://www.larrymillerhonda.com,Larry Miller Honda,Larry H. Miller Dealerships,Honda,West,UT,3.0,true,
+https://www.parkplacemercedes.com,Park Place Mercedes,Park Place Dealerships,Mercedes-Benz,South,TX,3.2,true,luxury
+https://www.galabordeaux.com,Gala Bordeaux Hyundai,Independent,Hyundai,Midwest,OH,2.9,true,
+https://www.sunshinesubaru.com,Sunshine Subaru,Independent,Subaru,West,CA,3.1,true,
+https://www.libertyjeep.com,Liberty Jeep,AutoNation,Jeep,Southeast,FL,3.2,true,tier1

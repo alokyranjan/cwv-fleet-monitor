@@ -1,0 +1,15 @@
+apiVersion: 1
+
+datasources:
+  - name: BigQuery
+    type: grafana-bigquery-datasource
+    uid: dealeron-bigquery
+    access: proxy
+    editable: true
+    jsonData:
+      authenticationType: jwt
+      clientEmail: $SA_CLIENT_EMAIL
+      defaultProject: $GCP_PROJECT_ID
+      tokenUri: https://oauth2.googleapis.com/token
+    secureJsonData:
+      privateKey: $__file{/etc/grafana/secrets/private-key.pem}

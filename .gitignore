@@ -1,0 +1,34 @@
+# Secrets & credentials
+secrets/
+.env
+
+# Config (contains project-specific settings)
+config/settings.yaml
+
+# Data files (may be large)
+data/*.csv
+!data/origins_sample.csv
+data/*.json
+
+# Grafana persistent data
+grafana-data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
