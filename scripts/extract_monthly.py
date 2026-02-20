@@ -1,7 +1,7 @@
 """Extract CrUX data for a specific month into cwv_monthly.
 
 Usage:
-    python scripts/extract_monthly.py [--month YYYYMM] [--force] [--config path/to/settings.yaml]
+    python scripts/extract_monthly.py [--month YYYYMM] [--force] [--notify] [--config path/to/settings.yaml]
 """
 
 import argparse
@@ -87,6 +87,7 @@ def main():
     parser = argparse.ArgumentParser(description="Extract CrUX data for a specific month")
     parser.add_argument("--month", type=int, help="Target month as YYYYMM (auto-detects latest if omitted)")
     parser.add_argument("--force", action="store_true", help="Re-extract even if data exists")
+    parser.add_argument("--notify", action="store_true", help="Post summary to Slack after extraction")
     parser.add_argument("--config", help="Path to settings.yaml")
     args = parser.parse_args()
 
@@ -122,6 +123,15 @@ def main():
         print_summary(client, config, target_yyyymm)
     else:
         print("  WARNING: No rows inserted. Check that origins are loaded and match CrUX data.")
+
+    # Slack notification
+    if args.notify:
+        try:
+            from notify_slack import post_notification
+            if not post_notification(client, config, target_yyyymm):
+                print("  WARNING: Slack notification failed")
+        except Exception as e:
+            print(f"  WARNING: Slack notification error: {e}")
 
     print("\nDone.")
 

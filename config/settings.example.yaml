@@ -11,3 +11,10 @@ crux:
   backfill_start: 202301
 origins:
   csv_path: "data/dealeron_origins.csv"
+slack:
+  webhook_url: ""          # or set SLACK_WEBHOOK_URL env var
+  enabled: true
+grafana:
+  base_url: "http://localhost:3000"
+  fleet_overview_uid: "fleet-overview"
+  worst_offenders_uid: "worst-offenders"
