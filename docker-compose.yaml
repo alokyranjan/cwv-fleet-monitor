@@ -6,7 +6,7 @@ services:
       - 8.8.8.8
       - 8.8.4.4
     ports:
-      - "3000:3000"
+      - "3008:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
       - GF_INSTALL_PLUGINS=grafana-bigquery-datasource

@@ -15,6 +15,6 @@ slack:
   webhook_url: ""          # or set SLACK_WEBHOOK_URL env var
   enabled: true
 grafana:
-  base_url: "http://localhost:3000"
+  base_url: "http://localhost:3008"
   fleet_overview_uid: "fleet-overview"
   worst_offenders_uid: "worst-offenders"
