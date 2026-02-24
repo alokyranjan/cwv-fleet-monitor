@@ -1,7 +1,7 @@
 -- Sites that improved: poor -> good
 -- Parameters: {project}, {dataset}, {target_yyyymm}, {prev_yyyymm}
 
-WITH current AS (
+WITH cur AS (
     SELECT origin, device, dealer_name, p75_lcp, p75_inp, p75_cls
     FROM `{project}.{dataset}.cwv_monthly`
     WHERE yyyymm = {target_yyyymm}
@@ -24,7 +24,7 @@ joined AS (
         p.p75_inp AS prev_inp,
         c.p75_cls AS current_cls,
         p.p75_cls AS prev_cls
-    FROM current c
+    FROM cur c
     INNER JOIN prev p ON c.origin = p.origin AND c.device = p.device
 ),
 
