@@ -1,8 +1,12 @@
 {
   "id": null,
   "uid": "site-drilldown",
-  "title": "Site Drilldown \u2014 Core Web Vitals",
-  "tags": ["crux", "cwv", "drilldown"],
+  "title": "Site Drilldown � Core Web Vitals",
+  "tags": [
+    "crux",
+    "cwv",
+    "drilldown"
+  ],
   "schemaVersion": 40,
   "version": 1,
   "editable": true,
@@ -23,14 +27,34 @@
         "type": "custom",
         "query": "phone,desktop,tablet",
         "current": {
-          "text": ["phone", "desktop", "tablet"],
-          "value": ["phone", "desktop", "tablet"],
+          "text": [
+            "phone",
+            "desktop",
+            "tablet"
+          ],
+          "value": [
+            "phone",
+            "desktop",
+            "tablet"
+          ],
           "selected": true
         },
         "options": [
-          { "text": "phone", "value": "phone", "selected": true },
-          { "text": "desktop", "value": "desktop", "selected": true },
-          { "text": "tablet", "value": "tablet", "selected": true }
+          {
+            "text": "phone",
+            "value": "phone",
+            "selected": true
+          },
+          {
+            "text": "desktop",
+            "value": "desktop",
+            "selected": true
+          },
+          {
+            "text": "tablet",
+            "value": "tablet",
+            "selected": true
+          }
         ],
         "multi": true,
         "includeAll": false,
@@ -42,7 +66,11 @@
         "label": "Origin",
         "type": "textbox",
         "query": "",
-        "current": { "text": "", "value": "", "selected": false },
+        "current": {
+          "text": "",
+          "value": "",
+          "selected": false
+        },
         "hide": 0,
         "skipUrlSync": false
       }
@@ -52,7 +80,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -66,7 +97,12 @@
       "type": "row",
       "title": "Site Info",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "id": 100,
       "panels": []
     },
@@ -74,13 +110,24 @@
       "id": 1,
       "title": "Site Info",
       "type": "table",
-      "gridPos": { "h": 4, "w": 12, "x": 0, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT dealer_name, oem_brand, state, platform_version\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly` WHERE origin = '${origin}')\nLIMIT 1",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT dealer_name, oem_brand, state, platform_version\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')\nLIMIT 1",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -92,20 +139,33 @@
       },
       "options": {
         "showHeader": true,
-        "footer": { "show": false }
+        "footer": {
+          "show": false
+        }
       }
     },
     {
       "id": 2,
       "title": "LCP Status",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(AVG(p75_lcp), 0) as p75_lcp_ms\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly` WHERE origin = '${origin}')",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(AVG(p75_lcp), 0) as p75_lcp_ms\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -117,16 +177,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 2500 },
-              { "color": "red", "value": 4000 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 2500
+              },
+              {
+                "color": "red",
+                "value": 4000
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -137,13 +212,24 @@
       "id": 3,
       "title": "INP Status",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(AVG(p75_inp), 0) as p75_inp_ms\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly` WHERE origin = '${origin}')",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(AVG(p75_inp), 0) as p75_inp_ms\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -155,16 +241,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 200 },
-              { "color": "red", "value": 500 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 200
+              },
+              {
+                "color": "red",
+                "value": 500
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -175,13 +276,24 @@
       "id": 4,
       "title": "CLS Status",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(AVG(p75_cls), 2) as p75_cls\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly` WHERE origin = '${origin}')",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(AVG(p75_cls), 2) as p75_cls\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -193,16 +305,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 0.10 },
-              { "color": "red", "value": 0.25 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.1
+              },
+              {
+                "color": "red",
+                "value": 0.25
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -213,7 +340,12 @@
       "type": "row",
       "title": "P75 Trends",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "id": 101,
       "panels": []
     },
@@ -221,13 +353,24 @@
       "id": 5,
       "title": "LCP Trend",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 6 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_lcp), 0) as p75_lcp\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_lcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_lcp), 0) as p75_lcp\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_lcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -236,13 +379,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#5794F2" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#5794F2"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 2500 },
-              { "color": "red", "value": 4000 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 2500
+              },
+              {
+                "color": "red",
+                "value": 4000
+              }
             ]
           },
           "custom": {
@@ -252,27 +407,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 11,
       "title": "INP Trend",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 6 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_inp), 0) as p75_inp\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_inp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_inp), 0) as p75_inp\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_inp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -281,13 +455,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#B877D9" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#B877D9"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 200 },
-              { "color": "red", "value": 500 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 200
+              },
+              {
+                "color": "red",
+                "value": 500
+              }
             ]
           },
           "custom": {
@@ -297,27 +483,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 12,
       "title": "CLS Trend",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 6 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_cls), 2) as p75_cls\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_cls IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_cls), 2) as p75_cls\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_cls IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -327,13 +532,25 @@
         "defaults": {
           "unit": "none",
           "decimals": 2,
-          "color": { "mode": "fixed", "fixedColor": "#5794F2" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#5794F2"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 0.10 },
-              { "color": "red", "value": 0.25 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.1
+              },
+              {
+                "color": "red",
+                "value": 0.25
+              }
             ]
           },
           "custom": {
@@ -343,27 +560,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 13,
       "title": "FCP Trend",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_fcp), 0) as p75_fcp\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_fcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_fcp), 0) as p75_fcp\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_fcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -372,13 +608,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#37BBCA" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#37BBCA"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 1800 },
-              { "color": "red", "value": 3000 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1800
+              },
+              {
+                "color": "red",
+                "value": 3000
+              }
             ]
           },
           "custom": {
@@ -388,27 +636,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 14,
       "title": "TTFB Trend",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_ttfb), 0) as p75_ttfb\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_ttfb IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_ttfb), 0) as p75_ttfb\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND p75_ttfb IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -417,13 +684,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#8F8F8F" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#8F8F8F"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 800 },
-              { "color": "red", "value": 1800 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 800
+              },
+              {
+                "color": "red",
+                "value": 1800
+              }
             ]
           },
           "custom": {
@@ -433,21 +712,34 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "type": "row",
-      "title": "Distribution Over Time",
+      "title": "Distribution",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
       "id": 102,
       "panels": []
     },
@@ -455,13 +747,24 @@
       "id": 6,
       "title": "LCP Distribution",
       "type": "barchart",
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 23 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 23
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(fast_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as poor\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND fast_lcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(fast_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND fast_lcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -473,21 +776,48 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "good" },
+            "matcher": {
+              "id": "byName",
+              "options": "good"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#0eb400" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#0eb400"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "needs_improvement" },
+            "matcher": {
+              "id": "byName",
+              "options": "needs_improvement"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#ffa400" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ffa400"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "poor" },
+            "matcher": {
+              "id": "byName",
+              "options": "poor"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#ff4e42" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ff4e42"
+                }
+              }
             ]
           }
         ]
@@ -499,21 +829,38 @@
         "stacking": "normal",
         "groupWidth": 0.7,
         "barWidth": 0.97,
-        "tooltip": { "mode": "multi", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 7,
       "title": "INP Distribution",
       "type": "barchart",
-      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 23 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 23
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(fast_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as poor\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND fast_inp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(fast_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND fast_inp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -525,21 +872,48 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "good" },
+            "matcher": {
+              "id": "byName",
+              "options": "good"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#0eb400" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#0eb400"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "needs_improvement" },
+            "matcher": {
+              "id": "byName",
+              "options": "needs_improvement"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#ffa400" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ffa400"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "poor" },
+            "matcher": {
+              "id": "byName",
+              "options": "poor"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#ff4e42" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ff4e42"
+                }
+              }
             ]
           }
         ]
@@ -551,21 +925,38 @@
         "stacking": "normal",
         "groupWidth": 0.7,
         "barWidth": 0.97,
-        "tooltip": { "mode": "multi", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 8,
       "title": "CLS Distribution",
       "type": "barchart",
-      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 23 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 23
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(small_cls, small_cls + medium_cls + large_cls)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(medium_cls, small_cls + medium_cls + large_cls)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(large_cls, small_cls + medium_cls + large_cls)) * 100, 1) as poor\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND small_cls IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(small_cls, small_cls + medium_cls + large_cls)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(medium_cls, small_cls + medium_cls + large_cls)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(large_cls, small_cls + medium_cls + large_cls)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND small_cls IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -577,21 +968,48 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "good" },
+            "matcher": {
+              "id": "byName",
+              "options": "good"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#0eb400" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#0eb400"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "needs_improvement" },
+            "matcher": {
+              "id": "byName",
+              "options": "needs_improvement"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#ffa400" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ffa400"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "poor" },
+            "matcher": {
+              "id": "byName",
+              "options": "poor"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#ff4e42" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ff4e42"
+                }
+              }
             ]
           }
         ]
@@ -603,15 +1021,26 @@
         "stacking": "normal",
         "groupWidth": 0.7,
         "barWidth": 0.97,
-        "tooltip": { "mode": "multi", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "type": "row",
       "title": "Device Breakdown",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 31 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
       "id": 103,
       "panels": []
     },
@@ -619,13 +1048,24 @@
       "id": 9,
       "title": "P75 by Device",
       "type": "table",
-      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 32 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  device,\n  ROUND(AVG(p75_lcp), 0) as p75_lcp,\n  ROUND(AVG(p75_inp), 0) as p75_inp,\n  ROUND(AVG(p75_cls), 2) as p75_cls,\n  ROUND(AVG(p75_fcp), 0) as p75_fcp,\n  ROUND(AVG(p75_ttfb), 0) as p75_ttfb\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly` WHERE origin = '${origin}')\nAND device IS NOT NULL\nGROUP BY device ORDER BY device",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  device,\n  ROUND(AVG(p75_lcp), 0) as p75_lcp,\n  ROUND(AVG(p75_inp), 0) as p75_inp,\n  ROUND(AVG(p75_cls), 2) as p75_cls,\n  ROUND(AVG(p75_fcp), 0) as p75_fcp,\n  ROUND(AVG(p75_ttfb), 0) as p75_ttfb\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')\nAND device IS NOT NULL\nGROUP BY device ORDER BY device",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -635,132 +1075,258 @@
         "defaults": {},
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "p75_lcp" },
+            "matcher": {
+              "id": "byName",
+              "options": "p75_lcp"
+            },
             "properties": [
-              { "id": "displayName", "value": "LCP (ms)" },
+              {
+                "id": "displayName",
+                "value": "LCP (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 2500 },
-                    { "color": "red", "value": 4000 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 2500
+                    },
+                    {
+                      "color": "red",
+                      "value": 4000
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "p75_inp" },
+            "matcher": {
+              "id": "byName",
+              "options": "p75_inp"
+            },
             "properties": [
-              { "id": "displayName", "value": "INP (ms)" },
+              {
+                "id": "displayName",
+                "value": "INP (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 200 },
-                    { "color": "red", "value": 500 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 200
+                    },
+                    {
+                      "color": "red",
+                      "value": 500
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "p75_cls" },
+            "matcher": {
+              "id": "byName",
+              "options": "p75_cls"
+            },
             "properties": [
-              { "id": "displayName", "value": "CLS" },
+              {
+                "id": "displayName",
+                "value": "CLS"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 0.10 },
-                    { "color": "red", "value": 0.25 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0.1
+                    },
+                    {
+                      "color": "red",
+                      "value": 0.25
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "p75_fcp" },
+            "matcher": {
+              "id": "byName",
+              "options": "p75_fcp"
+            },
             "properties": [
-              { "id": "displayName", "value": "FCP (ms)" },
+              {
+                "id": "displayName",
+                "value": "FCP (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 1800 },
-                    { "color": "red", "value": 3000 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1800
+                    },
+                    {
+                      "color": "red",
+                      "value": 3000
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "p75_ttfb" },
+            "matcher": {
+              "id": "byName",
+              "options": "p75_ttfb"
+            },
             "properties": [
-              { "id": "displayName", "value": "TTFB (ms)" },
+              {
+                "id": "displayName",
+                "value": "TTFB (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 800 },
-                    { "color": "red", "value": 1800 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 800
+                    },
+                    {
+                      "color": "red",
+                      "value": 1800
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "device" },
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
             "properties": [
-              { "id": "displayName", "value": "Device" }
+              {
+                "id": "displayName",
+                "value": "Device"
+              }
             ]
           }
         ]
       },
       "options": {
         "showHeader": true,
-        "footer": { "show": false }
+        "footer": {
+          "show": false
+        }
       }
-    },
-    {
-      "type": "row",
-      "title": "Navigation Types",
-      "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 38 },
-      "id": 104,
-      "panels": []
     },
     {
       "id": 10,
       "title": "Navigation Breakdown",
       "type": "piechart",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 39 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 47
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  ROUND(AVG(nav_navigate) * 100, 1) as Navigate,\n  ROUND(AVG(nav_navigate_cache) * 100, 1) as Cache,\n  ROUND(AVG(nav_reload) * 100, 1) as Reload,\n  ROUND(AVG(nav_back_forward) * 100, 1) as Back_Forward,\n  ROUND(AVG(nav_back_forward_cache) * 100, 1) as BF_Cache,\n  ROUND(AVG(nav_prerender) * 100, 1) as Prerender\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly` WHERE origin = '${origin}')",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  ROUND(AVG(nav_navigate) * 100, 1) as Navigate,\n  ROUND(AVG(nav_navigate_cache) * 100, 1) as Cache,\n  ROUND(AVG(nav_reload) * 100, 1) as Reload,\n  ROUND(AVG(nav_back_forward) * 100, 1) as Back_Forward,\n  ROUND(AVG(nav_back_forward_cache) * 100, 1) as BF_Cache,\n  ROUND(AVG(nav_prerender) * 100, 1) as Prerender\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -773,10 +1339,432 @@
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": true },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
         "pieType": "pie",
-        "tooltip": { "mode": "multi", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "right", "values": ["percent"] }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "values": [
+            "percent"
+          ]
+        }
+      }
+    },
+    {
+      "id": 15,
+      "title": "FCP Distribution",
+      "type": "barchart",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 31
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(fast_fcp, fast_fcp + avg_fcp + slow_fcp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_fcp, fast_fcp + avg_fcp + slow_fcp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_fcp, fast_fcp + avg_fcp + slow_fcp)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND fast_fcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "good"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#0eb400"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "needs_improvement"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ffa400"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "poor"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ff4e42"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "orientation": "vertical",
+        "xTickLabelRotation": -45,
+        "showValue": "auto",
+        "stacking": "normal",
+        "groupWidth": 0.7,
+        "barWidth": 0.97,
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 16,
+      "title": "TTFB Distribution",
+      "type": "barchart",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 31
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(SAFE_DIVIDE(fast_ttfb, fast_ttfb + avg_ttfb + slow_ttfb)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_ttfb, fast_ttfb + avg_ttfb + slow_ttfb)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_ttfb, fast_ttfb + avg_ttfb + slow_ttfb)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND fast_ttfb IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "good"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#0eb400"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "needs_improvement"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ffa400"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "poor"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ff4e42"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "orientation": "vertical",
+        "xTickLabelRotation": -45,
+        "showValue": "auto",
+        "stacking": "normal",
+        "groupWidth": 0.7,
+        "barWidth": 0.97,
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Traffic & Network",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 106,
+      "panels": []
+    },
+    {
+      "id": 17,
+      "title": "Device Traffic Mix",
+      "type": "piechart",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 47
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "SELECT\n  ROUND(AVG(desktopDensity) * 100, 1) as Desktop,\n  ROUND(AVG(phoneDensity) * 100, 1) as Phone,\n  ROUND(AVG(tabletDensity) * 100, 1) as Tablet\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "No device density data"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Desktop"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Phone"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF6EC7"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tablet"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#B877D9"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "pieType": "pie",
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "values": [
+            "percent"
+          ]
+        }
+      }
+    },
+    {
+      "id": 18,
+      "title": "Network Quality (RTT)",
+      "type": "piechart",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 47
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "SELECT\n  ROUND(AVG(low_rtt) * 100, 1) as Fast,\n  ROUND(AVG(medium_rtt) * 100, 1) as Medium,\n  ROUND(AVG(high_rtt) * 100, 1) as Slow\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE origin = '${origin}'\nAND device IN (${device:sqlstring})\nAND yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly` WHERE origin = '${origin}')"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "No RTT data"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fast"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#0eb400"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ffa400"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Slow"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ff4e42"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "pieType": "pie",
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "values": [
+            "percent"
+          ]
+        }
       }
     }
   ]

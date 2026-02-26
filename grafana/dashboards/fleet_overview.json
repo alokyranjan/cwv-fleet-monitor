@@ -1,8 +1,12 @@
 {
   "id": null,
   "uid": "fleet-overview",
-  "title": "Fleet Overview \u2014 Core Web Vitals",
-  "tags": ["crux", "cwv", "fleet"],
+  "title": "Fleet Overview � Core Web Vitals",
+  "tags": [
+    "crux",
+    "cwv",
+    "fleet"
+  ],
   "schemaVersion": 40,
   "version": 1,
   "editable": true,
@@ -23,14 +27,34 @@
         "type": "custom",
         "query": "phone,desktop,tablet",
         "current": {
-          "text": ["phone", "desktop", "tablet"],
-          "value": ["phone", "desktop", "tablet"],
+          "text": [
+            "phone",
+            "desktop",
+            "tablet"
+          ],
+          "value": [
+            "phone",
+            "desktop",
+            "tablet"
+          ],
           "selected": true
         },
         "options": [
-          { "text": "phone", "value": "phone", "selected": true },
-          { "text": "desktop", "value": "desktop", "selected": true },
-          { "text": "tablet", "value": "tablet", "selected": true }
+          {
+            "text": "phone",
+            "value": "phone",
+            "selected": true
+          },
+          {
+            "text": "desktop",
+            "value": "desktop",
+            "selected": true
+          },
+          {
+            "text": "tablet",
+            "value": "tablet",
+            "selected": true
+          }
         ],
         "multi": true,
         "includeAll": false,
@@ -43,7 +67,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -57,7 +84,12 @@
       "type": "row",
       "title": "CWV Pass Rates",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "id": 100,
       "panels": []
     },
@@ -65,13 +97,24 @@
       "id": 1,
       "title": "LCP Pass Rate",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 5, "x": 0, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 0,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as value\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as value\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -83,16 +126,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 50 },
-              { "color": "green", "value": 75 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 75
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -103,13 +161,24 @@
       "id": 2,
       "title": "INP Pass Rate",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 5, "x": 5, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 5,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as value\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as value\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -121,16 +190,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 50 },
-              { "color": "green", "value": 75 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 75
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -141,13 +225,24 @@
       "id": 3,
       "title": "CLS Pass Rate",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 5, "x": 10, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 10,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as value\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as value\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -159,16 +254,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 50 },
-              { "color": "green", "value": 75 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 75
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -179,13 +289,24 @@
       "id": 4,
       "title": "FCP Pass Rate",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 5, "x": 15, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 15,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(COUNTIF(p75_fcp <= 1800) * 100.0 / COUNT(*), 1) as value\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(COUNTIF(p75_fcp <= 1800) * 100.0 / COUNT(*), 1) as value\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -197,16 +318,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 50 },
-              { "color": "green", "value": 75 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 75
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -217,13 +353,24 @@
       "id": 5,
       "title": "TTFB Pass Rate",
       "type": "stat",
-      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT ROUND(COUNTIF(p75_ttfb <= 800) * 100.0 / COUNT(*), 1) as value\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT ROUND(COUNTIF(p75_ttfb <= 800) * 100.0 / COUNT(*), 1) as value\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -235,16 +382,31 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 50 },
-              { "color": "green", "value": 75 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 75
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
@@ -255,7 +417,12 @@
       "type": "row",
       "title": "CWV Summary",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "id": 111,
       "panels": []
     },
@@ -264,13 +431,24 @@
       "title": "CWV Pass / Fail",
       "description": "Sites passing ALL 3 core web vitals (LCP ≤ 2500ms, INP ≤ 200ms, CLS ≤ 0.10) vs sites failing any",
       "type": "piechart",
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 6 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) as Pass,\n  COUNTIF(NOT (p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10)) as Fail\nFROM (\n  SELECT origin,\n    AVG(p75_lcp) as p75_lcp,\n    AVG(p75_inp) as p75_inp,\n    AVG(p75_cls) as p75_cls\n  FROM `dealeron-crux.dealeron_crux.cwv_monthly`\n  WHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\n  AND device IN (${device:sqlstring})\n  AND p75_lcp IS NOT NULL AND p75_inp IS NOT NULL AND p75_cls IS NOT NULL\n  GROUP BY origin\n)",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) as Pass,\n  COUNTIF(NOT (p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10)) as Fail\nFROM (\n  SELECT origin,\n    AVG(p75_lcp) as p75_lcp,\n    AVG(p75_inp) as p75_inp,\n    AVG(p75_cls) as p75_cls\n  FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\n  WHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\n  AND device IN (${device:sqlstring})\n  AND p75_lcp IS NOT NULL AND p75_inp IS NOT NULL AND p75_cls IS NOT NULL\n  GROUP BY origin\n)",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -280,24 +458,58 @@
         "defaults": {},
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Pass" },
+            "matcher": {
+              "id": "byName",
+              "options": "Pass"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Fail" },
+            "matcher": {
+              "id": "byName",
+              "options": "Fail"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": true },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
         "pieType": "donut",
-        "tooltip": { "mode": "multi", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "right", "values": ["value", "percent"] }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "values": [
+            "value",
+            "percent"
+          ]
+        }
       }
     },
     {
@@ -305,13 +517,24 @@
       "title": "Pass Rate by Device",
       "description": "CWV pass rates broken down by device type",
       "type": "table",
-      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 6 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  device,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(AVG(p75_lcp), 0) as avg_lcp,\n  ROUND(AVG(p75_inp), 0) as avg_inp,\n  ROUND(AVG(p75_cls), 2) as avg_cls\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND device IS NOT NULL\nGROUP BY device\nORDER BY device",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  device,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(AVG(p75_lcp), 0) as avg_lcp,\n  ROUND(AVG(p75_inp), 0) as avg_inp,\n  ROUND(AVG(p75_cls), 2) as avg_cls\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND device IS NOT NULL\nGROUP BY device\nORDER BY device",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -321,166 +544,358 @@
         "defaults": {},
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "device" },
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
             "properties": [
-              { "id": "displayName", "value": "Device" }
+              {
+                "id": "displayName",
+                "value": "Device"
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "sites" },
+            "matcher": {
+              "id": "byName",
+              "options": "sites"
+            },
             "properties": [
-              { "id": "displayName", "value": "Sites" }
+              {
+                "id": "displayName",
+                "value": "Sites"
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "lcp_pass_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_pass_pct"
+            },
             "properties": [
-              { "id": "displayName", "value": "LCP Pass %" },
-              { "id": "unit", "value": "percent" },
+              {
+                "id": "displayName",
+                "value": "LCP Pass %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "red", "value": null },
-                    { "color": "yellow", "value": 50 },
-                    { "color": "green", "value": 75 }
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "inp_pass_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "inp_pass_pct"
+            },
             "properties": [
-              { "id": "displayName", "value": "INP Pass %" },
-              { "id": "unit", "value": "percent" },
+              {
+                "id": "displayName",
+                "value": "INP Pass %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "red", "value": null },
-                    { "color": "yellow", "value": 50 },
-                    { "color": "green", "value": 75 }
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "cls_pass_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "cls_pass_pct"
+            },
             "properties": [
-              { "id": "displayName", "value": "CLS Pass %" },
-              { "id": "unit", "value": "percent" },
+              {
+                "id": "displayName",
+                "value": "CLS Pass %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "red", "value": null },
-                    { "color": "yellow", "value": 50 },
-                    { "color": "green", "value": 75 }
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "cwv_pass_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "cwv_pass_pct"
+            },
             "properties": [
-              { "id": "displayName", "value": "CWV Pass %" },
-              { "id": "unit", "value": "percent" },
+              {
+                "id": "displayName",
+                "value": "CWV Pass %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "red", "value": null },
-                    { "color": "yellow", "value": 50 },
-                    { "color": "green", "value": 75 }
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "avg_lcp" },
+            "matcher": {
+              "id": "byName",
+              "options": "avg_lcp"
+            },
             "properties": [
-              { "id": "displayName", "value": "Avg LCP (ms)" },
+              {
+                "id": "displayName",
+                "value": "Avg LCP (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 2500 },
-                    { "color": "red", "value": 4000 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 2500
+                    },
+                    {
+                      "color": "red",
+                      "value": 4000
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "avg_inp" },
+            "matcher": {
+              "id": "byName",
+              "options": "avg_inp"
+            },
             "properties": [
-              { "id": "displayName", "value": "Avg INP (ms)" },
+              {
+                "id": "displayName",
+                "value": "Avg INP (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 200 },
-                    { "color": "red", "value": 500 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 200
+                    },
+                    {
+                      "color": "red",
+                      "value": 500
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "avg_cls" },
+            "matcher": {
+              "id": "byName",
+              "options": "avg_cls"
+            },
             "properties": [
-              { "id": "displayName", "value": "Avg CLS" },
+              {
+                "id": "displayName",
+                "value": "Avg CLS"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 0.10 },
-                    { "color": "red", "value": 0.25 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0.1
+                    },
+                    {
+                      "color": "red",
+                      "value": 0.25
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
         "showHeader": true,
-        "footer": { "show": false }
+        "footer": {
+          "show": false
+        }
       }
     },
     {
       "type": "row",
       "title": "Trends",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
       "id": 101,
       "panels": []
     },
@@ -488,13 +903,24 @@
       "id": 6,
       "title": "CWV Pass Rate Trends",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 15 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_good_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_good_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_good_pct\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_good_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_good_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_good_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -516,35 +942,73 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "lcp_good_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_good_pct"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "inp_good_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "inp_good_pct"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#B877D9" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#B877D9"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "cls_good_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "cls_good_pct"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF6EC7" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF6EC7"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "type": "row",
       "title": "Fleet P75 Trends",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 23 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
       "id": 110,
       "panels": []
     },
@@ -552,13 +1016,24 @@
       "id": 7,
       "title": "Fleet Avg LCP",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 24 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 24
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_lcp), 0) as avg_lcp\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_lcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_lcp), 0) as avg_lcp\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_lcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -567,13 +1042,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#5794F2" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#5794F2"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 2500 },
-              { "color": "red", "value": 4000 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 2500
+              },
+              {
+                "color": "red",
+                "value": 4000
+              }
             ]
           },
           "custom": {
@@ -583,27 +1070,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 11,
       "title": "Fleet Avg INP",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 24 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 24
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_inp), 0) as avg_inp\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_inp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_inp), 0) as avg_inp\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_inp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -612,13 +1118,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#B877D9" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#B877D9"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 200 },
-              { "color": "red", "value": 500 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 200
+              },
+              {
+                "color": "red",
+                "value": 500
+              }
             ]
           },
           "custom": {
@@ -628,27 +1146,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 12,
       "title": "Fleet Avg CLS",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 24 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 24
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_cls), 2) as avg_cls\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_cls IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_cls), 2) as avg_cls\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_cls IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -658,13 +1195,25 @@
         "defaults": {
           "unit": "none",
           "decimals": 2,
-          "color": { "mode": "fixed", "fixedColor": "#FF6EC7" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#FF6EC7"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 0.10 },
-              { "color": "red", "value": 0.25 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.1
+              },
+              {
+                "color": "red",
+                "value": 0.25
+              }
             ]
           },
           "custom": {
@@ -674,27 +1223,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 13,
       "title": "Fleet Avg FCP",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 32 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_fcp), 0) as avg_fcp\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_fcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_fcp), 0) as avg_fcp\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_fcp IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -703,13 +1271,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#37BBCA" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#37BBCA"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 1800 },
-              { "color": "red", "value": 3000 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1800
+              },
+              {
+                "color": "red",
+                "value": 3000
+              }
             ]
           },
           "custom": {
@@ -719,27 +1299,46 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 14,
       "title": "Fleet Avg TTFB",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 32 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_ttfb), 0) as avg_ttfb\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_ttfb IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(AVG(p75_ttfb), 0) as avg_ttfb\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nAND p75_ttfb IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -748,13 +1347,25 @@
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
-          "color": { "mode": "fixed", "fixedColor": "#8F8F8F" },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#8F8F8F"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 800 },
-              { "color": "red", "value": 1800 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 800
+              },
+              {
+                "color": "red",
+                "value": 1800
+              }
             ]
           },
           "custom": {
@@ -764,21 +1375,34 @@
             "pointSize": 5,
             "showPoints": "always",
             "spanNulls": false,
-            "thresholdsStyle": { "mode": "dashed" }
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "tooltip": { "mode": "single", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "type": "row",
       "title": "Breakdown",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 40 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 57
+      },
       "id": 102,
       "panels": []
     },
@@ -786,13 +1410,24 @@
       "id": 8,
       "title": "Pass Rate by OEM Brand",
       "type": "barchart",
-      "gridPos": { "h": 24, "w": 16, "x": 0, "y": 41 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 24,
+        "w": 16,
+        "x": 0,
+        "y": 58
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  TRIM(brand) as brand,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_good_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_good_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_good_pct\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`,\nUNNEST(SPLIT(oem_brand, ',')) as brand\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND oem_brand IS NOT NULL AND oem_brand != ''\nGROUP BY brand\nHAVING COUNT(*) >= 10\nORDER BY lcp_good_pct ASC",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  TRIM(brand) as brand,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_good_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_good_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_good_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`,\nUNNEST(SPLIT(oem_brand, ',')) as brand\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND oem_brand IS NOT NULL AND oem_brand != ''\nGROUP BY brand\nHAVING COUNT(*) >= 10\nORDER BY lcp_good_pct ASC",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -804,21 +1439,48 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "lcp_good_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_good_pct"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "inp_good_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "inp_good_pct"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#B877D9" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#B877D9"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "cls_good_pct" },
+            "matcher": {
+              "id": "byName",
+              "options": "cls_good_pct"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF6EC7" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF6EC7"
+                }
+              }
             ]
           }
         ]
@@ -830,21 +1492,38 @@
         "stacking": "none",
         "groupWidth": 0.7,
         "barWidth": 0.97,
-        "tooltip": { "mode": "multi", "sort": "none" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 9,
       "title": "Coverage Summary",
       "type": "stat",
-      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 41 },
-      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 58
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  COUNT(DISTINCT origin) as origins_with_data,\n  (SELECT COUNT(*) FROM `dealeron-crux.dealeron_crux.origins` WHERE is_active = TRUE) as total_origins\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawSql": "SELECT\n  COUNT(DISTINCT origin) as origins_with_data,\n  (SELECT COUNT(*) FROM `bigquery-dealeron-reporting.dealeron_site_speed.origins` WHERE is_active = TRUE) as total_origins\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -855,18 +1534,621 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "blue", "value": null }
+              {
+                "color": "blue",
+                "value": null
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "colorMode": "value",
         "graphMode": "none"
+      }
+    },
+    {
+      "type": "row",
+      "title": "Regional",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 82
+      },
+      "id": 120,
+      "panels": []
+    },
+    {
+      "id": 21,
+      "title": "Pass Rate by State",
+      "type": "table",
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 83
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "SELECT\n  state,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND state IS NOT NULL AND state != ''\nGROUP BY state\nHAVING COUNT(*) >= 5\nORDER BY cwv_pass_pct ASC"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "state"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "State"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sites"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Sites"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cwv_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CWV Pass %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "LCP %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "inp_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "INP %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cls_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CLS %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "CWV Pass %",
+            "desc": false
+          }
+        ],
+        "footer": {
+          "show": false
+        }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Device & Traffic",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "id": 121,
+      "panels": []
+    },
+    {
+      "id": 22,
+      "title": "CWV Pass Rate by Device (Trend)",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(COUNTIF(device = 'phone' AND p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / NULLIF(COUNTIF(device = 'phone'), 0), 1) as phone,\n  ROUND(COUNTIF(device = 'desktop' AND p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / NULLIF(COUNTIF(device = 'desktop'), 0), 1) as desktop,\n  ROUND(COUNTIF(device = 'tablet' AND p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / NULLIF(COUNTIF(device = 'tablet'), 0), 1) as tablet\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IS NOT NULL\nGROUP BY yyyymm ORDER BY yyyymm"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "showPoints": "auto",
+            "spanNulls": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "phone"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF6EC7"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "desktop"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tablet"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#B877D9"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 24,
+      "title": "Pass Rate by Traffic Tier",
+      "type": "table",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "SELECT\n  CASE rank\n    WHEN 1000 THEN 'Top 1K' WHEN 10000 THEN 'Top 10K' WHEN 100000 THEN 'Top 100K'\n    WHEN 500000 THEN 'Top 500K' WHEN 1000000 THEN 'Top 1M' WHEN 5000000 THEN 'Top 5M'\n    WHEN 10000000 THEN 'Top 10M' WHEN 50000000 THEN 'Top 50M' WHEN 100000000 THEN 'Top 100M'\n    ELSE CAST(rank AS STRING)\n  END as traffic_tier,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND rank IS NOT NULL\nGROUP BY rank ORDER BY rank"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "traffic_tier"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Traffic Tier"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sites"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Sites"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cwv_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CWV Pass %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "LCP %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "inp_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "INP %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cls_pass_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CLS %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "footer": {
+          "show": false
+        }
       }
     }
   ]

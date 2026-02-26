@@ -71,7 +71,7 @@
         {
           "refId": "A",
           "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  ROUND(AVG(SAFE_DIVIDE(fast_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as poor\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND fast_lcp IS NOT NULL",
+          "rawSql": "SELECT\n  ROUND(AVG(SAFE_DIVIDE(fast_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_lcp, fast_lcp + avg_lcp + slow_lcp)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND fast_lcp IS NOT NULL",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -151,7 +151,7 @@
         {
           "refId": "A",
           "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  ROUND(AVG(SAFE_DIVIDE(fast_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as poor\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND fast_inp IS NOT NULL",
+          "rawSql": "SELECT\n  ROUND(AVG(SAFE_DIVIDE(fast_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(avg_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(slow_inp, fast_inp + avg_inp + slow_inp)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND fast_inp IS NOT NULL",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -231,7 +231,7 @@
         {
           "refId": "A",
           "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  ROUND(AVG(SAFE_DIVIDE(small_cls, small_cls + medium_cls + large_cls)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(medium_cls, small_cls + medium_cls + large_cls)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(large_cls, small_cls + medium_cls + large_cls)) * 100, 1) as poor\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND small_cls IS NOT NULL",
+          "rawSql": "SELECT\n  ROUND(AVG(SAFE_DIVIDE(small_cls, small_cls + medium_cls + large_cls)) * 100, 1) as good,\n  ROUND(AVG(SAFE_DIVIDE(medium_cls, small_cls + medium_cls + large_cls)) * 100, 1) as needs_improvement,\n  ROUND(AVG(SAFE_DIVIDE(large_cls, small_cls + medium_cls + large_cls)) * 100, 1) as poor\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND small_cls IS NOT NULL",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -320,7 +320,7 @@
         {
           "refId": "A",
           "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  ROUND(p75_inp, 0) as p75_inp,\n  ROUND(p75_cls, 2) as p75_cls,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_lcp IS NOT NULL\nORDER BY p75_lcp DESC\nLIMIT 25",
+          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  ROUND(p75_inp, 0) as p75_inp,\n  ROUND(p75_cls, 2) as p75_cls,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_lcp IS NOT NULL\nORDER BY p75_lcp DESC\nLIMIT 25",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -439,7 +439,7 @@
         {
           "refId": "A",
           "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_inp, 0) as p75_inp,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  ROUND(p75_cls, 2) as p75_cls,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_inp IS NOT NULL\nORDER BY p75_inp DESC\nLIMIT 25",
+          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_inp, 0) as p75_inp,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  ROUND(p75_cls, 2) as p75_cls,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_inp IS NOT NULL\nORDER BY p75_inp DESC\nLIMIT 25",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -558,7 +558,7 @@
         {
           "refId": "A",
           "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
-          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_cls, 2) as p75_cls,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  ROUND(p75_inp, 0) as p75_inp,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `dealeron-crux.dealeron_crux.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `dealeron-crux.dealeron_crux.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_cls IS NOT NULL\nORDER BY p75_cls DESC\nLIMIT 25",
+          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_cls, 2) as p75_cls,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  ROUND(p75_inp, 0) as p75_inp,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_cls IS NOT NULL\nORDER BY p75_cls DESC\nLIMIT 25",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
