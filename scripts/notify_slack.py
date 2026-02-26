@@ -198,17 +198,29 @@ def build_slack_message(summary, regressions, worst, improvements, config, targe
         lcp_rate_delta = _delta_str(summary.get("lcp_pass_rate_delta"))
         inp_rate_delta = _delta_str(summary.get("inp_pass_rate_delta"))
         cls_rate_delta = _delta_str(summary.get("cls_pass_rate_delta"))
+        fcp_rate_delta = _delta_str(summary.get("fcp_pass_rate_delta"))
+        ttfb_rate_delta = _delta_str(summary.get("ttfb_pass_rate_delta"))
 
         lcp_p75 = _format_value(summary.get("avg_p75_lcp"), "lcp")
         inp_p75 = _format_value(summary.get("avg_p75_inp"), "inp")
         cls_p75 = _format_value(summary.get("avg_p75_cls"), "cls")
+        fcp_p75 = _format_value(summary.get("avg_p75_fcp"), "fcp")
+        ttfb_p75 = _format_value(summary.get("avg_p75_ttfb"), "ttfb")
+
+        lcp_p75_delta = _delta_str(summary.get("avg_p75_lcp_delta"), suffix="ms", decimals=0, invert=True)
+        inp_p75_delta = _delta_str(summary.get("avg_p75_inp_delta"), suffix="ms", decimals=0, invert=True)
+        cls_p75_delta = _delta_str(summary.get("avg_p75_cls_delta"), suffix="", decimals=3, invert=True)
+        fcp_p75_delta = _delta_str(summary.get("avg_p75_fcp_delta"), suffix="ms", decimals=0, invert=True)
+        ttfb_p75_delta = _delta_str(summary.get("avg_p75_ttfb_delta"), suffix="ms", decimals=0, invert=True)
 
         fleet_text = (
             f"*Overall CWV Pass Rate:* {summary['cwv_pass_rate']}%  {cwv_delta}\n"
             f"*Coverage:* {coverage_text}\n\n"
-            f"*LCP*  {summary['lcp_pass_rate']}% {lcp_rate_delta}  |  p75: {lcp_p75}\n"
-            f"*INP*  {summary['inp_pass_rate']}% {inp_rate_delta}  |  p75: {inp_p75}\n"
-            f"*CLS*  {summary['cls_pass_rate']}% {cls_rate_delta}  |  p75: {cls_p75}"
+            f"*LCP*  {summary['lcp_pass_rate']}% {lcp_rate_delta}  |  p75: {lcp_p75} ({lcp_p75_delta})\n"
+            f"*INP*  {summary['inp_pass_rate']}% {inp_rate_delta}  |  p75: {inp_p75} ({inp_p75_delta})\n"
+            f"*CLS*  {summary['cls_pass_rate']}% {cls_rate_delta}  |  p75: {cls_p75} ({cls_p75_delta})\n"
+            f"*FCP*  {summary.get('fcp_pass_rate', 'N/A')}% {fcp_rate_delta}  |  p75: {fcp_p75} ({fcp_p75_delta})\n"
+            f"*TTFB*  {summary.get('ttfb_pass_rate', 'N/A')}% {ttfb_rate_delta}  |  p75: {ttfb_p75} ({ttfb_p75_delta})"
         )
 
         blocks.append({"type": "divider"})

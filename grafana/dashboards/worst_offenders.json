@@ -657,6 +657,244 @@
         ],
         "footer": { "show": false }
       }
+    },
+    {
+      "type": "row",
+      "title": "Worst FCP Sites",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 46 },
+      "id": 104,
+      "panels": []
+    },
+    {
+      "id": 7,
+      "title": "Worst FCP \u2014 Top 25",
+      "description": "Sites with the highest P75 First Contentful Paint (threshold: 1800ms good, 3000ms poor)",
+      "type": "table",
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 47 },
+      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_fcp, 0) as p75_fcp,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  ROUND(p75_ttfb, 0) as p75_ttfb,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_fcp IS NOT NULL\nORDER BY p75_fcp DESC\nLIMIT 25",
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "p75_fcp" },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 1800 },
+                    { "color": "red", "value": 3000 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "p75_lcp" },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 2500 },
+                    { "color": "red", "value": 4000 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "p75_ttfb" },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 800 },
+                    { "color": "red", "value": 1800 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "cwv_status" },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  { "type": "value", "options": { "PASS": { "text": "PASS", "color": "green" }, "FAIL": { "text": "FAIL", "color": "red" } } }
+                ]
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "origin" },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Drilldown",
+                    "url": "/d/site-drilldown/site-drilldown?var-origin=${__data.fields.origin}&from=now-2y&to=now"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          { "displayName": "p75_fcp", "desc": true }
+        ],
+        "footer": { "show": false }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Worst TTFB Sites",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 59 },
+      "id": 105,
+      "panels": []
+    },
+    {
+      "id": 8,
+      "title": "Worst TTFB \u2014 Top 25",
+      "description": "Sites with the highest P75 Time to First Byte (threshold: 800ms good, 1800ms poor)",
+      "type": "table",
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 60 },
+      "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "grafana-bigquery-datasource", "uid": "dealeron-bigquery" },
+          "rawSql": "SELECT\n  origin,\n  dealer_name,\n  oem_brand,\n  state,\n  device,\n  ROUND(p75_ttfb, 0) as p75_ttfb,\n  ROUND(p75_fcp, 0) as p75_fcp,\n  ROUND(p75_lcp, 0) as p75_lcp,\n  CASE\n    WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS'\n    ELSE 'FAIL'\n  END as cwv_status\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND p75_ttfb IS NOT NULL\nORDER BY p75_ttfb DESC\nLIMIT 25",
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "p75_ttfb" },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 800 },
+                    { "color": "red", "value": 1800 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "p75_fcp" },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 1800 },
+                    { "color": "red", "value": 3000 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "p75_lcp" },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 2500 },
+                    { "color": "red", "value": 4000 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "cwv_status" },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  { "type": "value", "options": { "PASS": { "text": "PASS", "color": "green" }, "FAIL": { "text": "FAIL", "color": "red" } } }
+                ]
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "origin" },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Drilldown",
+                    "url": "/d/site-drilldown/site-drilldown?var-origin=${__data.fields.origin}&from=now-2y&to=now"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          { "displayName": "p75_ttfb", "desc": true }
+        ],
+        "footer": { "show": false }
+      }
     }
   ]
 }

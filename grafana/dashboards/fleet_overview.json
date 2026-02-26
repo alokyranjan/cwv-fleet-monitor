@@ -1395,13 +1395,167 @@
     },
     {
       "type": "row",
-      "title": "Breakdown",
+      "title": "Month-over-Month Changes",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 57
+      },
+      "id": 122,
+      "panels": []
+    },
+    {
+      "id": 25,
+      "title": "CWV Status Changes vs Previous Month",
+      "description": "Sites that changed CWV pass/fail status compared to the previous month. Regressions (PASS to FAIL) shown first.",
+      "type": "table",
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      },
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "dealeron-bigquery"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "dealeron-bigquery"
+          },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": 1,
+          "rawSql": "WITH latest AS (\n  SELECT MAX(yyyymm) as max_month FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\n),\nprev_month AS (\n  SELECT MAX(yyyymm) as prev FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\n  WHERE yyyymm < (SELECT max_month FROM latest)\n),\ncur AS (\n  SELECT origin, device, dealer_name, p75_lcp, p75_inp, p75_cls,\n    CASE WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS' ELSE 'FAIL' END as cwv\n  FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\n  WHERE yyyymm = (SELECT max_month FROM latest)\n  AND device IN (${device:sqlstring})\n),\nprev AS (\n  SELECT origin, device, p75_lcp, p75_inp, p75_cls,\n    CASE WHEN p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10 THEN 'PASS' ELSE 'FAIL' END as cwv\n  FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\n  WHERE yyyymm = (SELECT prev FROM prev_month)\n  AND device IN (${device:sqlstring})\n)\nSELECT\n  c.origin, c.dealer_name, c.device,\n  CASE WHEN p.cwv = 'PASS' AND c.cwv = 'FAIL' THEN 'REGRESSED'\n       WHEN p.cwv = 'FAIL' AND c.cwv = 'PASS' THEN 'IMPROVED'\n  END as status_change,\n  ROUND(c.p75_lcp, 0) as lcp,\n  ROUND(c.p75_lcp - p.p75_lcp, 0) as lcp_delta,\n  ROUND(c.p75_inp, 0) as inp,\n  ROUND(c.p75_inp - p.p75_inp, 0) as inp_delta,\n  ROUND(c.p75_cls, 3) as cls,\n  ROUND(c.p75_cls - p.p75_cls, 3) as cls_delta\nFROM cur c\nINNER JOIN prev p ON c.origin = p.origin AND c.device = p.device\nWHERE c.cwv != p.cwv\nORDER BY\n  CASE WHEN p.cwv = 'PASS' AND c.cwv = 'FAIL' THEN 0 ELSE 1 END,\n  ABS(c.p75_lcp - p.p75_lcp) DESC\nLIMIT 50"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "status_change" },
+            "properties": [
+              { "id": "displayName", "value": "Change" },
+              {
+                "id": "mappings",
+                "value": [
+                  { "type": "value", "options": { "REGRESSED": { "text": "REGRESSED", "color": "red" }, "IMPROVED": { "text": "IMPROVED", "color": "green" } } }
+                ]
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "lcp" },
+            "properties": [
+              { "id": "displayName", "value": "LCP (ms)" },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 2500 },
+                    { "color": "red", "value": 4000 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "lcp_delta" },
+            "properties": [
+              { "id": "displayName", "value": "LCP Delta" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "inp" },
+            "properties": [
+              { "id": "displayName", "value": "INP (ms)" },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 200 },
+                    { "color": "red", "value": 500 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "inp_delta" },
+            "properties": [
+              { "id": "displayName", "value": "INP Delta" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "cls" },
+            "properties": [
+              { "id": "displayName", "value": "CLS" },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 0.10 },
+                    { "color": "red", "value": 0.25 }
+                  ]
+                }
+              },
+              { "id": "custom.displayMode", "value": "color-background" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "cls_delta" },
+            "properties": [
+              { "id": "displayName", "value": "CLS Delta" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "origin" },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Drilldown",
+                    "url": "/d/site-drilldown/site-drilldown?var-origin=${__data.fields.origin}&from=now-2y&to=now"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "footer": { "show": false }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Breakdown",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 70
       },
       "id": 102,
       "panels": []
@@ -1414,7 +1568,7 @@
         "h": 24,
         "w": 16,
         "x": 0,
-        "y": 58
+        "y": 71
       },
       "datasource": {
         "type": "grafana-bigquery-datasource",
@@ -1510,7 +1664,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 58
+        "y": 71
       },
       "datasource": {
         "type": "grafana-bigquery-datasource",
@@ -1565,7 +1719,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 82
+        "y": 95
       },
       "id": 120,
       "panels": []
@@ -1578,7 +1732,7 @@
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 83
+        "y": 96
       },
       "datasource": {
         "type": "grafana-bigquery-datasource",
