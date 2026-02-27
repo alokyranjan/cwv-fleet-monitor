@@ -1,7 +1,7 @@
 {
   "id": null,
   "uid": "site-drilldown",
-  "title": "Site Drilldown � Core Web Vitals",
+  "title": "Site Drilldown — Core Web Vitals",
   "tags": [
     "crux",
     "cwv",
@@ -64,13 +64,25 @@
       {
         "name": "origin",
         "label": "Origin",
-        "type": "textbox",
-        "query": "",
+        "type": "query",
+        "query": {
+          "rawSql": "SELECT DISTINCT origin FROM `bigquery-dealeron-reporting.dealeron_site_speed.origins` WHERE is_active = TRUE ORDER BY origin",
+          "format": 1
+        },
+        "datasource": {
+          "type": "grafana-bigquery-datasource",
+          "uid": "dealeron-bigquery"
+        },
         "current": {
           "text": "",
           "value": "",
           "selected": false
         },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "multi": false,
+        "includeAll": false,
         "hide": 0,
         "skipUrlSync": false
       }
@@ -182,12 +194,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 2500
+                "color": "#FF9830",
+                "value": 1800
               },
               {
                 "color": "red",
-                "value": 4000
+                "value": 2500
               }
             ]
           }
@@ -246,12 +258,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 200
+                "color": "#FF9830",
+                "value": 100
               },
               {
                 "color": "red",
-                "value": 500
+                "value": 200
               }
             ]
           }
@@ -310,12 +322,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 0.1
+                "color": "#FF9830",
+                "value": 0.05
               },
               {
                 "color": "red",
-                "value": 0.25
+                "value": 0.1
               }
             ]
           }
@@ -391,12 +403,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 2500
+                "color": "#FF9830",
+                "value": 1800
               },
               {
                 "color": "red",
-                "value": 4000
+                "value": 2500
               }
             ]
           },
@@ -467,12 +479,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 200
+                "color": "#FF9830",
+                "value": 100
               },
               {
                 "color": "red",
-                "value": 500
+                "value": 200
               }
             ]
           },
@@ -544,12 +556,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 0.1
+                "color": "#FF9830",
+                "value": 0.05
               },
               {
                 "color": "red",
-                "value": 0.25
+                "value": 0.1
               }
             ]
           },
@@ -620,12 +632,8 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 1800
-              },
-              {
                 "color": "red",
-                "value": 3000
+                "value": 1800
               }
             ]
           },
@@ -696,12 +704,8 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 800
-              },
-              {
                 "color": "red",
-                "value": 1800
+                "value": 800
               }
             ]
           },

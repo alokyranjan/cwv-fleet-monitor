@@ -223,10 +223,25 @@ def build_slack_message(summary, regressions, worst, improvements, config, targe
             f"*TTFB*  {summary.get('ttfb_pass_rate', 'N/A')}% {ttfb_rate_delta}  |  p75: {ttfb_p75} ({ttfb_p75_delta})"
         )
 
+        # DealerOn Target pass rates
+        lcp_tgt = summary.get("lcp_target_rate", "N/A")
+        inp_tgt = summary.get("inp_target_rate", "N/A")
+        cls_tgt = summary.get("cls_target_rate", "N/A")
+        lcp_tgt_delta = _delta_str(summary.get("lcp_target_rate_delta"))
+        inp_tgt_delta = _delta_str(summary.get("inp_target_rate_delta"))
+        cls_tgt_delta = _delta_str(summary.get("cls_target_rate_delta"))
+
+        target_text = (
+            f"\n\n*DealerOn Target Pass Rates* (LCP <1.8s | INP <100ms | CLS <0.05)\n"
+            f"*LCP*  {lcp_tgt}% {lcp_tgt_delta}  |  "
+            f"*INP*  {inp_tgt}% {inp_tgt_delta}  |  "
+            f"*CLS*  {cls_tgt}% {cls_tgt_delta}"
+        )
+
         blocks.append({"type": "divider"})
         blocks.append({
             "type": "section",
-            "text": {"type": "mrkdwn", "text": f"*Fleet Health Snapshot*\n\n{fleet_text}"}
+            "text": {"type": "mrkdwn", "text": f"*Fleet Health Snapshot*\n\n{fleet_text}{target_text}"}
         })
 
     # --- Regressions ---

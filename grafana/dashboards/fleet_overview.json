@@ -1,7 +1,7 @@
 {
   "id": null,
   "uid": "fleet-overview",
-  "title": "Fleet Overview � Core Web Vitals",
+  "title": "Fleet Overview — Core Web Vitals",
   "tags": [
     "crux",
     "cwv",
@@ -534,7 +534,7 @@
             "type": "grafana-bigquery-datasource",
             "uid": "dealeron-bigquery"
           },
-          "rawSql": "SELECT\n  device,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(AVG(p75_lcp), 0) as avg_lcp,\n  ROUND(AVG(p75_inp), 0) as avg_inp,\n  ROUND(AVG(p75_cls), 2) as avg_cls\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND device IS NOT NULL\nGROUP BY device\nORDER BY device",
+          "rawSql": "SELECT\n  device,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(AVG(p75_lcp), 0) as avg_lcp,\n  ROUND(AVG(p75_inp), 0) as avg_inp,\n  ROUND(AVG(p75_cls), 2) as avg_cls,\n  ROUND(COUNTIF(p75_lcp <= 1800) * 100.0 / COUNT(*), 1) as lcp_target_pct,\n  ROUND(COUNTIF(p75_inp <= 100) * 100.0 / COUNT(*), 1) as inp_target_pct,\n  ROUND(COUNTIF(p75_cls <= 0.05) * 100.0 / COUNT(*), 1) as cls_target_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND device IS NOT NULL\nGROUP BY device\nORDER BY device",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -876,6 +876,144 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "LCP DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "inp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "INP DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cls_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CLS DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
           }
         ]
       },
@@ -920,7 +1058,7 @@
             "type": "grafana-bigquery-datasource",
             "uid": "dealeron-bigquery"
           },
-          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_good_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_good_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_good_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nGROUP BY yyyymm ORDER BY yyyymm",
+          "rawSql": "SELECT\n  TIMESTAMP(PARSE_DATE('%Y%m', CAST(yyyymm AS STRING))) as time,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_good_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_good_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_good_pct,\n  ROUND(COUNTIF(p75_lcp <= 1800) * 100.0 / COUNT(*), 1) as lcp_target_pct,\n  ROUND(COUNTIF(p75_inp <= 100) * 100.0 / COUNT(*), 1) as inp_target_pct,\n  ROUND(COUNTIF(p75_cls <= 0.05) * 100.0 / COUNT(*), 1) as cls_target_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE device IN (${device:sqlstring})\nGROUP BY yyyymm ORDER BY yyyymm",
           "rawQuery": true,
           "editorMode": "code",
           "format": 1
@@ -953,6 +1091,10 @@
                   "mode": "fixed",
                   "fixedColor": "#5794F2"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "LCP Good %"
               }
             ]
           },
@@ -968,6 +1110,10 @@
                   "mode": "fixed",
                   "fixedColor": "#B877D9"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "INP Good %"
               }
             ]
           },
@@ -983,6 +1129,109 @@
                   "mode": "fixed",
                   "fixedColor": "#FF6EC7"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "CLS Good %"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "LCP DealerOn Target %"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "inp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "INP DealerOn Target %"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#B877D9"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cls_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CLS DealerOn Target %"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF6EC7"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
               }
             ]
           }
@@ -1054,12 +1303,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 2500
+                "color": "#FF9830",
+                "value": 1800
               },
               {
                 "color": "red",
-                "value": 4000
+                "value": 2500
               }
             ]
           },
@@ -1130,12 +1379,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 200
+                "color": "#FF9830",
+                "value": 100
               },
               {
                 "color": "red",
-                "value": 500
+                "value": 200
               }
             ]
           },
@@ -1207,12 +1456,12 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 0.1
+                "color": "#FF9830",
+                "value": 0.05
               },
               {
                 "color": "red",
-                "value": 0.25
+                "value": 0.1
               }
             ]
           },
@@ -1283,12 +1532,8 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 1800
-              },
-              {
                 "color": "red",
-                "value": 3000
+                "value": 1800
               }
             ]
           },
@@ -1359,12 +1604,8 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 800
-              },
-              {
                 "color": "red",
-                "value": 1800
+                "value": 800
               }
             ]
           },
@@ -1438,96 +1679,212 @@
         "defaults": {},
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "status_change" },
+            "matcher": {
+              "id": "byName",
+              "options": "status_change"
+            },
             "properties": [
-              { "id": "displayName", "value": "Change" },
+              {
+                "id": "displayName",
+                "value": "Change"
+              },
               {
                 "id": "mappings",
                 "value": [
-                  { "type": "value", "options": { "REGRESSED": { "text": "REGRESSED", "color": "red" }, "IMPROVED": { "text": "IMPROVED", "color": "green" } } }
+                  {
+                    "type": "value",
+                    "options": {
+                      "REGRESSED": {
+                        "text": "REGRESSED",
+                        "color": "red"
+                      },
+                      "IMPROVED": {
+                        "text": "IMPROVED",
+                        "color": "green"
+                      }
+                    }
+                  }
                 ]
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "lcp" },
+            "matcher": {
+              "id": "byName",
+              "options": "lcp"
+            },
             "properties": [
-              { "id": "displayName", "value": "LCP (ms)" },
+              {
+                "id": "displayName",
+                "value": "LCP (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 2500 },
-                    { "color": "red", "value": 4000 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 2500
+                    },
+                    {
+                      "color": "red",
+                      "value": 4000
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "lcp_delta" },
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_delta"
+            },
             "properties": [
-              { "id": "displayName", "value": "LCP Delta" }
+              {
+                "id": "displayName",
+                "value": "LCP Delta"
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "inp" },
+            "matcher": {
+              "id": "byName",
+              "options": "inp"
+            },
             "properties": [
-              { "id": "displayName", "value": "INP (ms)" },
+              {
+                "id": "displayName",
+                "value": "INP (ms)"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 200 },
-                    { "color": "red", "value": 500 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 200
+                    },
+                    {
+                      "color": "red",
+                      "value": 500
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "inp_delta" },
+            "matcher": {
+              "id": "byName",
+              "options": "inp_delta"
+            },
             "properties": [
-              { "id": "displayName", "value": "INP Delta" }
+              {
+                "id": "displayName",
+                "value": "INP Delta"
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "cls" },
+            "matcher": {
+              "id": "byName",
+              "options": "cls"
+            },
             "properties": [
-              { "id": "displayName", "value": "CLS" },
+              {
+                "id": "displayName",
+                "value": "CLS"
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 0.10 },
-                    { "color": "red", "value": 0.25 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0.1
+                    },
+                    {
+                      "color": "red",
+                      "value": 0.25
+                    }
                   ]
                 }
               },
-              { "id": "custom.displayMode", "value": "color-background" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "cls_delta" },
+            "matcher": {
+              "id": "byName",
+              "options": "cls_delta"
+            },
             "properties": [
-              { "id": "displayName", "value": "CLS Delta" }
+              {
+                "id": "displayName",
+                "value": "CLS Delta"
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "origin" },
+            "matcher": {
+              "id": "byName",
+              "options": "origin"
+            },
             "properties": [
               {
                 "id": "links",
@@ -1544,7 +1901,9 @@
       },
       "options": {
         "showHeader": true,
-        "footer": { "show": false }
+        "footer": {
+          "show": false
+        }
       }
     },
     {
@@ -1748,7 +2107,7 @@
           "rawQuery": true,
           "editorMode": "code",
           "format": 1,
-          "rawSql": "SELECT\n  state,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND state IS NOT NULL AND state != ''\nGROUP BY state\nHAVING COUNT(*) >= 5\nORDER BY cwv_pass_pct ASC"
+          "rawSql": "SELECT\n  state,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 1800) * 100.0 / COUNT(*), 1) as lcp_target_pct,\n  ROUND(COUNTIF(p75_inp <= 100) * 100.0 / COUNT(*), 1) as inp_target_pct,\n  ROUND(COUNTIF(p75_cls <= 0.05) * 100.0 / COUNT(*), 1) as cls_target_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND state IS NOT NULL AND state != ''\nGROUP BY state\nHAVING COUNT(*) >= 5\nORDER BY cwv_pass_pct ASC"
         }
       ],
       "fieldConfig": {
@@ -1945,6 +2304,144 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "LCP DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "inp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "INP DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cls_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CLS DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
           }
         ]
       },
@@ -2098,7 +2595,7 @@
           "rawQuery": true,
           "editorMode": "code",
           "format": 1,
-          "rawSql": "SELECT\n  CASE rank\n    WHEN 1000 THEN 'Top 1K' WHEN 10000 THEN 'Top 10K' WHEN 100000 THEN 'Top 100K'\n    WHEN 500000 THEN 'Top 500K' WHEN 1000000 THEN 'Top 1M' WHEN 5000000 THEN 'Top 5M'\n    WHEN 10000000 THEN 'Top 10M' WHEN 50000000 THEN 'Top 50M' WHEN 100000000 THEN 'Top 100M'\n    ELSE CAST(rank AS STRING)\n  END as traffic_tier,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND rank IS NOT NULL\nGROUP BY rank ORDER BY rank"
+          "rawSql": "SELECT\n  CASE rank\n    WHEN 1000 THEN 'Top 1K' WHEN 10000 THEN 'Top 10K' WHEN 100000 THEN 'Top 100K'\n    WHEN 500000 THEN 'Top 500K' WHEN 1000000 THEN 'Top 1M' WHEN 5000000 THEN 'Top 5M'\n    WHEN 10000000 THEN 'Top 10M' WHEN 50000000 THEN 'Top 50M' WHEN 100000000 THEN 'Top 100M'\n    ELSE CAST(rank AS STRING)\n  END as traffic_tier,\n  COUNT(DISTINCT origin) as sites,\n  ROUND(COUNTIF(p75_lcp <= 2500 AND p75_inp <= 200 AND p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cwv_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 2500) * 100.0 / COUNT(*), 1) as lcp_pass_pct,\n  ROUND(COUNTIF(p75_inp <= 200) * 100.0 / COUNT(*), 1) as inp_pass_pct,\n  ROUND(COUNTIF(p75_cls <= 0.10) * 100.0 / COUNT(*), 1) as cls_pass_pct,\n  ROUND(COUNTIF(p75_lcp <= 1800) * 100.0 / COUNT(*), 1) as lcp_target_pct,\n  ROUND(COUNTIF(p75_inp <= 100) * 100.0 / COUNT(*), 1) as inp_target_pct,\n  ROUND(COUNTIF(p75_cls <= 0.05) * 100.0 / COUNT(*), 1) as cls_target_pct\nFROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`\nWHERE yyyymm = (SELECT MAX(yyyymm) FROM `bigquery-dealeron-reporting.dealeron_site_speed.cwv_monthly`)\nAND device IN (${device:sqlstring})\nAND rank IS NOT NULL\nGROUP BY rank ORDER BY rank"
         }
       ],
       "fieldConfig": {
@@ -2287,6 +2784,144 @@
                     }
                   ]
                 }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lcp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "LCP DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "inp_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "INP DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cls_target_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CLS DealerOn Target %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
               },
               {
                 "id": "custom.cellOptions",
